@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+      <!-- 
+        - primary meta tags
+      -->
+      <title>Grilli - Amazing & Delicious Food</title>
+      <meta name="title" content="Grilli - Amazing & Delicious Food">
+      <meta name="description" content="This is a Restaurant website">
+    
+      <!-- 
+    - favicon s a small icon displayed in the browser tab, bookmarks, and sometimes in search results.
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+    
+      <!-- 
+        - google font link and crossorigin ensures the request is handled correctly for third-party content.
+      -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
+    
+      <!-- 
+        - custom css link
+      -->
+      <link rel="stylesheet" href="./assets/css/style.css">
+    
+      <!-- 
+        - preload images
+      -->
+      <link rel="preload" as="image" href="./assets/images/hero-slider-1.jpg">
+      <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
+      <link rel="preload" as="image" href="./assets/images/hero-slider-3.jpg">
+    
+   
+  <!-- Include your existing head content from menu.html -->
+  <style>
+
+.auth-button {
+      display: inline-flex;
+      padding: 8px 20px;
+      border: 2px solid var(--gold-crayola);
+      background-color: transparent;
+      color: var(--gold-crayola);
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      margin-left: 20px;
+      border-radius: 4px;
+    }
+
+    .auth-button ion-icon {
+      font-size: 20px;
+    }
+
+    .auth-button:hover {
+      background-color: var(--gold-crayola);
+      color: var(--smoky-black-1);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      position: relative;
+      background-color: var(--smoky-black-1);
+      padding: 30px;
+      border: 1px solid var(--gold-crayola);
+      width: 90%;
+      max-width: 400px;
+      border-radius: 8px;
+      margin: 0 auto;
+    }
+
+    .modal-header {
+      margin-bottom: 30px;
+    }
+
+    .modal-tabs {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .modal-tab {
+      position: relative;
+      flex: 1;
+      padding: 12px 20px;
+      background: transparent;
+      border: 1px solid var(--gold-crayola);
+      color: var(--gold-crayola);
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      overflow: hidden;
+    }
+
+    .modal-tab::before,
+    .modal-tab::after {
+      content: "";
+      position: absolute;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .modal-tab::before {
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: var(--gold-crayola);
+      z-index: -1;
+    }
+
+    .modal-tab:hover::before {
+      left: 0;
+    }
+
+    .modal-tab:hover {
+      color: var(--smoky-black-1);
+    }
+
+    .modal-tab.active {
+      background: var(--gold-crayola);
+      color: var(--smoky-black-1);
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      background-color: var(--smoky-black-2);
+      border: 1px solid var(--gold-crayola);
+      color: var(--white);
+      border-radius: 4px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--gold-crayola);
+      box-shadow: 0 0 0 2px rgba(207, 162, 82, 0.2);
+    }
+
+    .form-group .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold-crayola);
+      cursor: pointer;
+      font-size: 20px;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .form-submit {
+      position: relative;
+      width: 100%;
+      padding: 12px;
+      background-color: var(--gold-crayola);
+      color: var(--smoky-black-1);
+      border: 1px solid var(--gold-crayola);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .form-submit::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: var(--smoky-black-1);
+      z-index: 0;
+      transition: all 0.5s ease;
+    }
+
+    .form-submit:hover::before {
+      left: 0;
+    }
+
+    .form-submit span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-submit:hover {
+      color: var(--gold-crayola);
+    }
+
+    .modal-tab {
+      position: relative;
+      color: var(--gold-crayola);
+      font-size: var(--fontSize-label-2);
+      font-weight: var(--weight-bold);
+      text-transform: uppercase;
+      letter-spacing: var(--letterSpacing-5);
+      padding: 12px 45px;
+      border: 2px solid var(--gold-crayola);
+      background: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .modal-tab.active,
+    .modal-tab:hover {
+      background-color: var(--gold-crayola);
+      color: var(--smoky-black-1);
+    }
+
+    .login-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: var(--eerie-black-1);
+      padding: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--gold-crayola);
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .auth-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 20px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px 30px;
+      background: transparent;
+      border: 1px solid var(--gold-crayola);
+      color: var(--gold-crayola);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--gold-crayola);
+      color: var(--eerie-black-1);
+    }
+
+    .auth-form {
+      margin-top: 20px;
+    }
+
+    .auth-form input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--gold-crayola);
+      border-radius: 4px;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .auth-form input:focus {
+      outline: none;
+      border-color: var(--gold-crayola);
+      box-shadow: 0 0 0 2px rgba(207, 162, 82, 0.2);
+    }
+
+    .password-wrapper {
+      position: relative;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .password-wrapper input {
+      width: 100%;
+      margin-bottom: 0;
+      padding-right: 40px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: var(--gold-crayola);
+      font-size: 20px;
+      z-index: 1;
+      pointer-events: auto;
+    }
+
+    .auth-links {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .auth-link {
+      color: var(--gold-crayola);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .auth-link:hover {
+      text-decoration: underline;
+    }
+
+    .btn.btn-secondary {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .auth-container {
+      position: relative;
+      margin-left: 20px;
+    }
+
+    .auth-btn, .user-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: transparent;
+      border: 1px solid var(--gold-crayola);
+      color: var(--gold-crayola);
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      width: fit-content;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .auth-btn:hover, .user-btn:hover {
+      background: var(--gold-crayola);
+      color: var(--smoky-black-1);
+    }
+
+    .auth-btn ion-icon, .user-btn ion-icon {
+      margin-right: 3px;
+      font-size: 16px;
+    }
+
+    .auth-btn > div, .user-btn > div {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .user-btn {
+      width: auto;
+      padding-right: 8px;
+    }
+
+    .user-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .user-menu {
+      position: absolute;
+      top: calc(100% + 5px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: transparent;
+      border: 1px solid var(--gold-crayola);
+      border-radius: 6px;
+      padding: 0;
+      display: none;
+      z-index: 1000;
+      width: 120px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .user-menu.active {
+      display: block;
+    }
+
+    .user-menu-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      color: var(--gold-crayola);
+      text-decoration: none;
+      font-size: 13px;
+      transition: all 0.3s ease;
+      width: 100%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      height: 32px;
+    }
+
+    .user-menu-item:hover {
+      background: var(--gold-crayola);
+      color: var(--smoky-black-1);
+    }
+
+    .user-menu-item ion-icon {
+      margin-right: 8px;
+      font-size: 16px;
+    }
+
+    .user-btn ion-icon[name="chevron-down-outline"] {
+      transition: transform 0.3s ease;
+      font-size: 16px;
+    }
+
+    .user-btn.active ion-icon[name="chevron-down-outline"] {
+      transform: rotate(180deg);
+    }
+
+    .footer-bottom {
+      padding: 20px 0;
+      text-align: center;
+      margin: 0;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .copyright {
+      color: var(--gold-crayola);
+      font-size: 14px;
+      line-height: 1;
+      margin: 0;
+      padding: 0;
+      font-family: var(--fontFamily-forum);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+
+    .header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .contact-container {
+      display: flex;
+      justify-content: space-between;
+      padding: 80px 0;
+      max-width: 1200px;
+      margin: 120px auto 0;
+      gap: 40px;
+    }
+
+    .contact-info {
+      flex: 1;
+      background: rgba(23, 1, 1, 0.95);
+      padding: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--gold-crayola);
+    }
+
+    .contact-form {
+      flex: 1;
+      background: rgba(12, 12, 12, 0.95);
+      padding: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--gold-crayola);
+    }
+
+    .contact-title {
+      color: var(--gold-crayola);
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    .contact-text {
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      color: var(--gold-crayola);
+    }
+
+    .contact-item ion-icon {
+      margin-right: 15px;
+      font-size: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--gold-crayola);
+      border-radius: 4px;
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    textarea.input-field {
+      height: 150px;
+      resize: none;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .social-links a {
+      color: var(--gold-crayola);
+      font-size: 24px;
+    }
+
+    .submit-btn {
+      background: var(--gold-crayola);
+      color: #000;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .contact-container {
+        flex-direction: column;
+        padding: 40px 20px;
+      }
+    }
+
+    /* Navigation hover fix */
+    .navbar-link.hover-underline {
+      position: relative;
+    }
+
+    .navbar-link.hover-underline .separator {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background-color: var(--gold-crayola);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .navbar-link.hover-underline:hover .separator {
+      transform: scaleX(1);
+    }
+
+    .navbar-link.hover-underline.active .separator {
+      transform: scaleX(1);
+    }
+
+    .navbar-link.hover-underline:not(.active):hover .separator {
+      transform: scaleX(0);
+    }
+
+    /* Footer styles */
+    .footer {
+      position: relative;
+      z-index: 1;
+      background: transparent;
+      margin: 0;
+      width: 100%;
+      border-top: 1px solid var(--gold-crayola);
+    }
+
+    .footer-bottom {
+      padding: 20px 0;
+      text-align: center;
+      margin: 0;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .copyright {
+      color: var(--gold-crayola);
+      font-size: 14px;
+      line-height: 1;
+      margin: 0;
+      padding: 0;
+      font-family: var(--fontFamily-forum);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Back to top button styling */
+    .back-top-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      margin: 0;
+      background-color: var(--gold-crayola);
+      color: var(--smoky-black-1);
+      font-size: 20px;
+      padding: 10px;
+      border-radius: 50%;
+      transition: 0.25s ease;
+      opacity: 0.9;
+    }
+
+    .back-top-btn:is(:hover, :focus) {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+
+    /* Remove any extra spacing */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  </style>
+</head>
+<body id="top">
+
+    <!-- - #PRELOADER-->
+  
+    <div class="preload" data-preaload> <!-- -The data-preaload is a custom attribute, possibly used in JavaScript to remove/hide the preloader after loading. -->
+      <div class="circle"></div>
+      <p class="text">Grilli</p>
+    </div>
+  
+    <!-- - #TOP BAR -->
+  
+    <div class="topbar">
+      <div class="container">
+  
+        <address class="topbar-item">
+          <div class="icon">
+            <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
+          </div>
+  
+          <span class="span"><!-- - Displays the actual restaurant address.-->
+            Grilli Restaurant, NTR Dist, Vijayawada 502355, AP
+          </span>
+        </address>
+  
+        <div class="separator"></div>
+  
+        <div class="topbar-item item-2">
+          <div class="icon">
+            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+          </div>
+  
+          <span class="span">Daily : 10.00 am to 10.00 pm</span>
+        </div>
+  
+        <a href="tel:+11234567890" class="topbar-item link">
+          <div class="icon">
+            <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
+          </div>
+  
+          <span class="span">+91 8639611160</span>
+        </a>
+  
+        <div class="separator"></div>
+  
+        <a href="mailto:booking@restaurant.com" class="topbar-item link">
+          <div class="icon">
+            <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+          </div>
+  
+          <span class="span">grillires@gmail.com</span>
+        </a>
+  
+      </div>
+    </div>
+  
+    <!-- - #HEADER-->
+  
+    <header class="header" data-header><!--data-header → Used for JavaScript interaction -->
+      <div class="container">
+  
+        <a href="#" class="logo">
+          <img src="./assets/images/logo.svg" width="160" height="50" alt="Grilli - Home">
+        </a>
+<!-- Updated auth button with icon -->
+<div class="auth-container">
+  <!-- Auth Button (shown when logged out) -->
+  <button id="authBtn" class="auth-btn">
+    <div>
+      <ion-icon name="person-outline"></ion-icon>
+      Login/Signup
+    </div>
+  </button>
+
+  <!-- User Dropdown (shown when logged in) -->
+  <div id="userDropdown" class="user-dropdown" style="display: none;">
+    <button class="user-btn" onclick="toggleDropdown(this)">
+      <div>
+        <ion-icon name="person-outline"></ion-icon>
+        <span id="welcomeUser">Welcome, User</span>
+      </div>
+      <ion-icon name="chevron-down-outline" style="margin-left: 8px;"></ion-icon>
+    </button>
+    <div class="user-menu">
+      <button class="user-menu-item" onclick="handleLogout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+        <span>Logout</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+        <nav class="navbar" data-navbar><!--data-navbar → Used for JavaScript toggling (mobile menu open/close).-->
+          <button class="close-btn" aria-label="close menu" data-nav-toggler>
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+          <a href="#" class="logo">
+            <img src="./assets/images/logo.svg" width="160" height="50" alt="Grilli - Home">
+          </a>
+          <ul class="navbar-list">
+            <li class="navbar-item">
+              <a href="index.html" class="navbar-link hover-underline">
+                <div class="separator"></div>
+                <span class="span">Home</span>
+              </a>
+            </li>
+  
+            <li class="navbar-item">
+              <a href="menu.html" class="navbar-link hover-underline">
+                <div class="separator"></div>
+                <span class="span">Menus</span>
+              </a>
+            </li>
+  
+            <li class="navbar-item">
+              <a href="#about" class="navbar-link hover-underline">
+                <div class="separator"></div>
+                <span class="span">About Us</span>
+              </a>
+            </li>
+  
+            <li class="navbar-item">
+              <a href="contact.html" class="navbar-link hover-underline active">
+                <div class="separator"></div>
+                <span class="span">Contact</span>
+              </a>
+            </li>
+  
+          </ul>
+  
+          <div class="text-center">
+            <p class="headline-1 navbar-title">Visit Us</p>
+            <address class="body-4">
+              Grilli Restaurant, NTR dist, <br>
+              Vijayawada 502355, AP
+            </address>
+            <p class="body-4 navbar-text">Open: 10.00 am - 10.00pm</p>
+            <a href="mailto:booking@grilli.com" class="body-4 sidebar-link">grillires@gmail.com</a>
+  
+            <div class="separator"></div>
+            <p class="contact-label">Booking Request</p>
+            <a href="tel:+91123123456" class="body-1 contact-number hover-underline">
+              +91-8639611160
+            </a>
+          </div>
+  
+        </nav>
+  
+        <a href="booking.html" class="btn btn-secondary">
+          <span class="text text-1">Book A Table</span>
+          <span class="text text-2" aria-hidden="true">Book A Table</span>
+        </a>
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler><!--Displays a hamburger menu for mobile users.-->
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+        <div class="overlay" data-nav-toggler data-overlay></div><!--When the menu is open on mobile, this darkens the background.-->
+      </div>
+    </header>
+  
+  <!-- Auth Modal -->
+  <div id="authModal" class="login-modal">
+    <div class="modal-content">
+        <div class="auth-tabs">
+            <button class="tab-btn active" data-tab="login">Login</button>
+            <button class="tab-btn" data-tab="signup">Sign Up</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form">
+            <input type="text" name="username" placeholder="Username" required>
+            <div class="password-wrapper">
+                <input type="password" name="password" placeholder="Password" required>
+                <ion-icon name="eye-outline" class="password-toggle"></ion-icon>
+            </div>
+            <button type="submit" class="btn btn-secondary">
+                <span class="text text-1">Login</span>
+                <span class="text text-2" aria-hidden="true">Login</span>
+            </button>
+            <div class="auth-links">
+                <a href="#" class="auth-link" onclick="showForgotPasswordForm()">Forgot Password?</a>
+                <a href="#" class="auth-link close-modal">Close</a>
+            </div>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form id="signupForm" class="auth-form" style="display: none;">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <div class="password-wrapper">
+                <input type="password" name="password" placeholder="Password" required>
+                <ion-icon name="eye-outline" class="password-toggle"></ion-icon>
+            </div>
+            <button type="submit" class="btn btn-secondary">
+                <span class="text text-1">Sign Up</span>
+                <span class="text text-2" aria-hidden="true">Sign Up</span>
+            </button>
+            <div class="auth-links">
+                <a href="#" class="auth-link close-modal">Close</a>
+            </div>
+        </form>
+
+        <!-- Forgot Password Form -->
+        <form id="forgotPasswordForm" class="auth-form" style="display: none;">
+            <h3>Forgot Password</h3>
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn btn-secondary">
+                <span class="text text-1">Submit</span>
+                <span class="text text-2" aria-hidden="true">Submit</span>
+            </button>
+            <div class="auth-links">
+                <a href="#" class="auth-link" onclick="showLoginForm()">Back to Login</a>
+                <a href="#" class="auth-link close-modal">Close</a>
+            </div>
+        </form>
+    </div>
+  </div>
+
+  
+    <main>
+      <article>
+  
+        <!-- - #HERO-->
+  
+        <section class="hero text-center" aria-label="home" id="home">
+          <ul class="hero-slider" data-hero-slider>
+  
+            <li class="slider-item active" data-hero-slider-item>
+  
+              <div class="slider-bg">
+                <img src="./assets/images/con.jpg" width="1880" height="950" alt="" class="img-cover">
+              </div>
+  
+              <p class="label-2 section-subtitle slider-reveal">Contact Us</p>
+  
+              <h1 class="display-1 hero-title slider-reveal">
+                Contact us we're here to help!
+              </h1>
+  
+              <a href="menu.html" class="btn btn-primary slider-reveal">
+                <span class="text text-1">View Our Menu</span>
+  
+                <span class="text text-2" aria-hidden="true">View Our Menu</span>
+              </a>
+  
+            </li>
+            
+              <a href="booking.html" class="hero-btn has-after">
+                <img src="./assets/images/hero-icon.png" width="48" height="48" alt="booking icon">
+      
+                <span class="label-2 text-center span">Book A Table</span>
+              </a>
+      
+            </section>
+
+            
+    <div class="contact-container">
+      <div class="contact-info">
+        <h2 class="contact-title">Contact Us</h2>
+        <p class="contact-text">Find our office address and email contact details below.</p>
+        
+        <div class="contact-item">
+          <ion-icon name="location-outline"></ion-icon>
+          <span>H NO: 20-4-140 Grilli Restaurant, NTR Dist, Vijayawada 502355, AP</span>
+        </div>
+
+        <div class="contact-item">
+          <ion-icon name="mail-outline"></ion-icon>
+          <span>grillires@gmail.com</span>
+        </div>
+
+        <div class="contact-item">
+          <ion-icon name="call-outline"></ion-icon>
+          <span>+91 8639611160</span>
+        </div>
+
+      </div>
+
+      <div class="contact-form">
+        <h2 class="contact-title">Get in Touch</h2>
+        <form method="POST" action="addpeople.php">
+          <div class="form-group">
+            <input type="text" class="input-field" placeholder="Full Name" name="fullname" required>
+            <input type="email" class="input-field" placeholder="Email" name="email" required>
+            <input type="text" class="input-field" placeholder="Subject" name="subject" required>
+            <input type="tel" class="input-field" placeholder="Mobile Number" name="mobile" required>
+            <textarea class="input-field" placeholder="Your Message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-secondary">
+            <span class="text text-1">Submit</span>
+            <span class="text text-2" aria-hidden="true">Submit</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; 2025 Grilli. All Rights Reserved | Crafted by our 4 members of team.
+      </p>
+    </div>
+  </footer>
+
+  <!--#BACK TO TOP-->
+  <a href="#top" class="back-top-btn active" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+  </a>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  <script src="./assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tab switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const formType = btn.getAttribute('data-tab');
+                document.querySelectorAll('.auth-form').forEach(form => {
+                    form.style.display = 'none';
+                });
+                document.getElementById(formType + 'Form').style.display = 'block';
+            });
+        });
+
+        // Password toggle
+        document.querySelectorAll('.password-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.setAttribute('name', 'eye-off-outline');
+                } else {
+                    input.type = 'password';
+                    this.setAttribute('name', 'eye-outline');
+                }
+            });
+        });
+
+        // Close modal
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('authModal').style.display = 'none';
+            });
+        });
+
+        // Sign up form submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('signup.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Registration successful! Please login.');
+                    document.querySelector('[data-tab="login"]').click();
+                } else {
+                    alert(data.message || 'Registration failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during registration');
+            });
+        });
+
+        // Login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('login.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    localStorage.setItem('user', JSON.stringify({
+                        username: data.username,
+                        loggedIn: true
+                    }));
+                    document.getElementById('authBtn').style.display = 'none';
+                    document.getElementById('userDropdown').style.display = 'block';
+                    document.getElementById('welcomeUser').textContent = `Welcome, ${data.username}`;
+                    document.getElementById('authModal').style.display = 'none';
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
+                } else {
+                    alert(data.message || 'Login failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during login. Please try again.');
+            });
+        });
+
+        // Forgot password form submission
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            alert('Password reset link has been sent to ' + email);
+            showLoginForm();
+        });
+    });
+
+    // Show forgot password form
+    function showForgotPasswordForm() {
+        document.querySelectorAll('.auth-form').forEach(form => {
+            form.style.display = 'none';
+        });
+        document.getElementById('forgotPasswordForm').style.display = 'block';
+    }
+
+    // Show login form
+    function showLoginForm() {
+        document.querySelectorAll('.auth-form').forEach(form => {
+            form.style.display = 'none';
+        });
+        document.getElementById('loginForm').style.display = 'block';
+    }
+
+    // Open auth modal
+    document.getElementById('authBtn').addEventListener('click', function() {
+        document.getElementById('authModal').style.display = 'flex';
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(e) {
+        const modal = document.getElementById('authModal');
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    function handleLogout() {
+        localStorage.removeItem('user');
+        document.getElementById('userDropdown').style.display = 'none';
+        document.getElementById('authBtn').style.display = 'flex';
+        location.reload();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user.loggedIn) {
+            document.getElementById('authBtn').style.display = 'none';
+            document.getElementById('userDropdown').style.display = 'block';
+            document.getElementById('welcomeUser').textContent = `Welcome, ${user.username}`;
+        }
+    });
+
+    function toggleDropdown(button) {
+        const dropdown = button.nextElementSibling;
+        const allDropdowns = document.querySelectorAll('.user-menu');
+        const allButtons = document.querySelectorAll('.user-btn');
+        
+        // Close all other dropdowns
+        allDropdowns.forEach(d => {
+            if (d !== dropdown) {
+                d.classList.remove('active');
+            }
+        });
+        allButtons.forEach(b => {
+            if (b !== button) {
+                b.classList.remove('active');
+            }
+        });
+        
+        // Toggle current dropdown
+        dropdown.classList.toggle('active');
+        button.classList.toggle('active');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const dropdown = document.querySelector('.user-dropdown');
+        const isClickInside = dropdown.contains(event.target);
+        
+        if (!isClickInside) {
+            const menu = dropdown.querySelector('.user-menu');
+            const button = dropdown.querySelector('.user-btn');
+            menu.classList.remove('active');
+            button.classList.remove('active');
+        }
+    });
+  </script>
+</body>
+</html>

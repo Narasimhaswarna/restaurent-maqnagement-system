@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  <!-- 
+    - primary meta tags
+  -->
+  <title>Grilli - Amazing & Delicious Food</title>
+  <meta name="title" content="Grilli - Amazing & Delicious Food">
+  <meta name="description" content="This is a Restaurant website">
+
+  <!-- 
+    - favicon s a small icon displayed in the browser tab, bookmarks, and sometimes in search results.
+  -->
+  
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - google font link and crossorigin ensures the request is handled correctly for third-party content.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - preload images
+  -->
+  <link rel="preload" as="image" href="./assets/images/hero-slider-1.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-slider-3.jpg">
+
+  <style>
+    .auth-button {
+      display: inline-flex;
+      padding: 8px 20px;
+      border: 2px solid var(--gold-crayola);
+      background-color: transparent;
+      color: var(--gold-crayola);
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      margin-left: 20px;
+      border-radius: 4px;
+    }
+
+    .auth-button ion-icon {
+      font-size: 20px;
+    }
+
+    .auth-button:hover {
+      background-color: var(--gold-crayola);
+      color: var(--smoky-black-1);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      position: relative;
+      background-color: var(--smoky-black-1);
+      padding: 30px;
+      border: 1px solid var(--gold-crayola);
+      width: 90%;
+      max-width: 400px;
+      border-radius: 8px;
+      margin: 0 auto;
+    }
+
+    .modal-header {
+      margin-bottom: 30px;
+    }
+
+    .modal-tabs {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .modal-tab {
+      position: relative;
+      flex: 1;
+      padding: 12px 20px;
+      background: transparent;
+      border: 1px solid var(--gold-crayola);
+      color: var(--gold-crayola);
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      overflow: hidden;
+    }
+
+    .modal-tab::before,
+    .modal-tab::after {
+      content: "";
+      position: absolute;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .modal-tab::before {
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: var(--gold-crayola);
+      z-index: -1;
+    }
+
+    .modal-tab:hover::before {
+      left: 0;
+    }
+
+    .modal-tab:hover {
+      color: var(--smoky-black-1);
+    }
+
+    .modal-tab.active {
+      background: var(--gold-crayola);
+      color: var(--smoky-black-1);
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      background-color: var(--smoky-black-2);
+      border: 1px solid var(--gold-crayola);
+      color: var(--white);
+      border-radius: 4px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--gold-crayola);
+      box-shadow: 0 0 0 2px rgba(207, 162, 82, 0.2);
+    }
+
+    .form-group .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold-crayola);
+      cursor: pointer;
+      font-size: 20px;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .form-submit {
+      position: relative;
+      width: 100%;
+      padding: 12px;
+      background-color: var(--gold-crayola);
+      color: var(--smoky-black-1);
+      border: 1px solid var(--gold-crayola);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .form-submit::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: var(--smoky-black-1);
+      z-index: 0;
+      transition: all 0.5s ease;
+    }
+
+    .form-submit:hover::before {
+      left: 0;
+    }
+
+    .form-submit span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-submit:hover {
+      color: var(--gold-crayola);
+    }
+
+    .modal-tab {
+      position: relative;
+      color: var(--gold-crayola);
+      font-size: var(--fontSize-label-2);
+      font-weight: var(--weight-bold);
+      text-transform: uppercase;
+      letter-spacing: var(--letterSpacing-5);
+      padding: 12px 45px;
+      border: 2px solid var(--gold-crayola);
+      background: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .modal-tab.active,
+    .modal-tab:hover {
+      background-color: var(--gold-crayola);
+      color: var(--smoky-black-1);
+    }
+
+    .login-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: var(--eerie-black-1);
+      padding: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--gold-crayola);
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .auth-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 20px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px 30px;
+      background: transparent;
+      border: 1px solid var(--gold-crayola);
+      color: var(--gold-crayola);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--gold-crayola);
+      color: var(--eerie-black-1);
+    }
+
+    .auth-form {
+      margin-top: 20px;
+    }
+
+    .auth-form input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--gold-crayola);
+      border-radius: 4px;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .auth-form input:focus {
+      outline: none;
+      border-color: var(--gold-crayola);
+      box-shadow: 0 0 0 2px rgba(207, 162, 82, 0.2);
+    }
+
+    .password-wrapper {
+      position: relative;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .password-wrapper input {
+      width: 100%;
+      margin-bottom: 0;
+      padding-right: 40px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: var(--gold-crayola);
+      font-size: 20px;
+      z-index: 1;
+      pointer-events: auto;
+    }
+
+    .auth-links {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .auth-link {
+      color: var(--gold-crayola);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .auth-link:hover {
+      text-decoration: underline;
+    }
+
+    .btn.btn-secondary {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .auth-container {
+      position: relative;
+      margin-left: 20px;
+    }
+
+    .auth-btn, .user-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: transparent;
+      border: 1px solid var(--gold-crayola);
+      color: var(--gold-crayola);
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      width: fit-content;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .auth-btn:hover, .user-btn:hover {
+      background: var(--gold-crayola);
+      color: var(--smoky-black-1);
+    }
+
+    .auth-btn ion-icon, .user-btn ion-icon {
+      margin-right: 3px;
+      font-size: 16px;
+    }
+
+    .auth-btn > div, .user-btn > div {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .user-btn {
+      width: auto;
+      padding-right: 8px;
+    }
+
+    .user-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .user-menu {
+      position: absolute;
+      top: calc(100% + 5px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: transparent;
+      border: 1px solid var(--gold-crayola);
+      border-radius: 6px;
+      padding: 0;
+      display: none;
+      z-index: 1000;
+      width: 120px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .user-menu.active {
+      display: block;
+    }
+
+    .user-menu-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      color: var(--gold-crayola);
+      text-decoration: none;
+      font-size: 13px;
+      transition: all 0.3s ease;
+      width: 100%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      height: 32px;
+    }
+
+    .user-menu-item:hover {
+      background: var(--gold-crayola);
+      color: var(--smoky-black-1);
+    }
+
+    .user-menu-item ion-icon {
+      margin-right: 8px;
+      font-size: 16px;
+    }
+
+    .user-btn ion-icon[name="chevron-down-outline"] {
+      transition: transform 0.3s ease;
+      font-size: 16px;
+    }
+
+    .user-btn.active ion-icon[name="chevron-down-outline"] {
+      transform: rotate(180deg);
+    }
+
+    .footer-bottom {
+      padding: 20px 0;
+      text-align: center;
+      margin: 0;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .copyright {
+      color: var(--gold-crayola);
+      font-size: 14px;
+      line-height: 1;
+      margin: 0;
+      padding: 0;
+      font-family: var(--fontFamily-forum);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* Navigation hover fix */
+    .navbar-link.hover-underline {
+      position: relative;
+    }
+
+    .navbar-link.hover-underline .separator {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background-color: var(--gold-crayola);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .navbar-link.hover-underline:hover .separator {
+      transform: scaleX(1);
+    }
+
+    .navbar-link.hover-underline.active .separator {
+      transform: scaleX(1);
+    }
+
+    .navbar-link.hover-underline:not(.active):hover .separator {
+      transform: scaleX(0);
+    }
+
+    /* Rest of your existing styles */
+
+    /* Updated footer styles */
+    .footer {
+      position: relative;
+      z-index: 1;
+      background: transparent;
+      margin: 0;
+      width: 100%;
+      border-top: 1px solid var(--gold-crayola);
+    }
+
+    .footer-bottom {
+      padding: 20px 0;
+      text-align: center;
+      margin: 0;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .copyright {
+      color: var(--gold-crayola);
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      font-family: var(--fontFamily-forum);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Back to top button styling */
+    .back-top-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      margin: 0;
+      background-color: var(--gold-crayola);
+      color: var(--smoky-black-1);
+      font-size: 20px;
+      padding: 10px;
+      border-radius: 50%;
+      transition: 0.25s ease;
+      opacity: 0.9;
+    }
+
+    .back-top-btn:is(:hover, :focus) {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+
+    /* Remove any extra spacing */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    /* Ensure the last menu section has enough padding */
+    .menu-section:last-of-type {
+      padding-bottom: 150px;  /* Add padding to accommodate footer */
+    }
+  </style>
+
+</head>
+
+<!-- 
+    - top will help you in smooth scrolling
+  -->
+<body id="top">
+  <!-- - #PRELOADER-->
+
+  <div class="preload" data-preaload> <!-- -The data-preaload is a custom attribute, possibly used in JavaScript to remove/hide the preloader after loading. -->
+    <div class="circle"></div>
+    <p class="text">Grilli</p>
+  </div>
+
+
+  <!-- - #TOP BAR -->
+
+  <div class="topbar">
+    <div class="container">
+
+      <address class="topbar-item">
+        <div class="icon">
+          <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
+        </div>
+
+        <span class="span"><!-- - Displays the actual restaurant address.-->
+          Grilli Restaurant, NTR Dist, Vijayawada 502355, AP
+        </span>
+      </address>
+
+      <div class="separator"></div>
+
+      <div class="topbar-item item-2">
+        <div class="icon">
+          <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+        </div>
+
+        <span class="span">Daily : 10.00 am to 10.00 pm</span>
+      </div>
+
+      <a href="tel:+11234567890" class="topbar-item link">
+        <div class="icon">
+          <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
+        </div>
+
+        <span class="span">+91 8639611160</span>
+      </a>
+
+      <div class="separator"></div>
+
+      <a href="mailto:booking@restaurant.com" class="topbar-item link">
+        <div class="icon">
+          <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+        </div>
+
+        <span class="span">grillires@gmail.com</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- - #HEADER-->
+
+  <header class="header" data-header>
+    <div class="container">
+        <a href="#" class="logo">
+            <img src="./assets/images/logo.svg" width="160" height="50" alt="Grilli - Home">
+        </a>
+
+        <!-- Updated auth button with icon -->
+      <div class="auth-container">
+        <!-- Auth Button (shown when logged out) -->
+        <button id="authBtn" class="auth-btn">
+          <div>
+            <ion-icon name="person-outline"></ion-icon>
+            Login/Signup
+          </div>
+        </button>
+
+        <!-- User Dropdown (shown when logged in) -->
+        <div id="userDropdown" class="user-dropdown" style="display: none;">
+          <button class="user-btn" onclick="toggleDropdown(this)">
+            <div>
+              <ion-icon name="person-outline"></ion-icon>
+              <span id="welcomeUser">Welcome, User</span>
+            </div>
+            <ion-icon name="chevron-down-outline" style="margin-left: 8px;"></ion-icon>
+          </button>
+          <div class="user-menu">
+            <button class="user-menu-item" onclick="handleLogout()">
+              <ion-icon name="log-out-outline"></ion-icon>
+              <span>Logout</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+        
+        <nav class="navbar" data-navbar>
+            <button class="close-btn" aria-label="close menu" data-nav-toggler>
+                <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+            </button>
+            <a href="#" class="logo">
+                <img src="./assets/images/logo.svg" width="160" height="50" alt="Grilli - Home">
+            </a>
+            <ul class="navbar-list">
+                <li class="navbar-item">
+                    <a href="index.html" class="navbar-link hover-underline">
+                        <div class="separator"></div>
+                        <span class="span">Home</span>
+                    </a>
+                </li>
+
+                <li class="navbar-item">
+                    <a href="menu.html" class="navbar-link hover-underline active">
+                        <div class="separator"></div>
+                        <span class="span">Menus</span>
+                    </a>
+                </li>
+
+                <li class="navbar-item">
+                    <a href="#about" class="navbar-link hover-underline">
+                        <div class="separator"></div>
+                        <span class="span">About Us</span>
+                    </a>
+                </li>
+
+                <li class="navbar-item">
+                    <a href="contact.html" class="navbar-link hover-underline">
+                        <div class="separator"></div>
+                        <span class="span">Contact</span>
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="text-center">
+                <p class="headline-1 navbar-title">Visit Us</p>
+                <address class="body-4">
+                    Grilli Restaurant, NTR dist, <br>
+                    Vijayawada 502355, AP
+                </address>
+                <p class="body-4 navbar-text">Open: 10.00 am - 10.00pm</p>
+                <a href="mailto:booking@grilli.com" class="body-4 sidebar-link">grillires@gmail.com</a>
+
+                <div class="separator"></div>
+                <p class="contact-label">Booking Request</p>
+                <a href="tel:+91123123456" class="body-1 contact-number hover-underline">
+                    +91-8639611160
+                </a>
+            </div>
+        </nav>
+        <a href="addcart.html" class="cart-icon" style="margin-right: 15px;">
+            <img src="./assets/images/add.jpg" width="35" height="35" alt="Shopping Cart">
+        </a>
+        <a href="booking.html" class="btn btn-secondary">
+            <span class="text text-1">Book A Table</span>
+            <span class="text text-2" aria-hidden="true">Book A Table</span>
+        </a>
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
+            <span class="line line-3"></span>
+        </button>
+        <div class="overlay" data-nav-toggler data-overlay></div>
+    </div>
+  </header>
+
+  <!-- Auth Modal -->
+  <div id="authModal" class="login-modal">
+    <div class="modal-content">
+        <div class="auth-tabs">
+            <button class="tab-btn active" data-tab="login">Login</button>
+            <button class="tab-btn" data-tab="signup">Sign Up</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form">
+            <input type="text" name="username" placeholder="Username" required>
+            <div class="password-wrapper">
+                <input type="password" name="password" placeholder="Password" required>
+                <ion-icon name="eye-outline" class="password-toggle"></ion-icon>
+            </div>
+            <button type="submit" class="btn btn-secondary">
+                <span class="text text-1">Login</span>
+                <span class="text text-2" aria-hidden="true">Login</span>
+            </button>
+            <div class="auth-links">
+                <a href="#" class="auth-link" onclick="showForgotPasswordForm()">Forgot Password?</a>
+                <a href="#" class="auth-link close-modal">Close</a>
+            </div>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form id="signupForm" class="auth-form" style="display: none;">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <div class="password-wrapper">
+                <input type="password" name="password" placeholder="Password" required>
+                <ion-icon name="eye-outline" class="password-toggle"></ion-icon>
+            </div>
+            <button type="submit" class="btn btn-secondary">
+                <span class="text text-1">Sign Up</span>
+                <span class="text text-2" aria-hidden="true">Sign Up</span>
+            </button>
+            <div class="auth-links">
+                <a href="#" class="auth-link close-modal">Close</a>
+            </div>
+        </form>
+
+        <!-- Forgot Password Form -->
+        <form id="forgotPasswordForm" class="auth-form" style="display: none;">
+            <h3>Forgot Password</h3>
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn btn-secondary">
+                <span class="text text-1">Submit</span>
+                <span class="text text-2" aria-hidden="true">Submit</span>
+            </button>
+            <div class="auth-links">
+                <a href="#" class="auth-link" onclick="showLoginForm()">Back to Login</a>
+                <a href="#" class="auth-link close-modal">Close</a>
+            </div>
+        </form>
+    </div>
+  </div>
+
+<!--first page -->
+<main>
+  <article>
+    <section class="hero text-center" aria-label="home" id="home" style="margin: 0; padding: 0;">
+      <ul class="hero-slider" data-hero-slider>
+        <li class="slider-item active" data-hero-slider-item>
+          <div class="slider-bg" style="margin: 0; padding: 0;">
+            <img src="./assets/images/tin.jpg" width="1880" height="650" alt="" class="img-cover" style="display: block;">
+          </div>
+          <p class="label-2 section-subtitle slider-reveal">our menu page</p>
+          <h1 class="display-1 hero-title slider-reveal">
+              Our menu 
+          </h1>
+        </li>
+      </ul>
+    </section>
+   
+    <a href="booking.html" class="hero-btn has-after">
+      <img src="./assets/images/hero-icon.png" width="48" height="48" alt="booking icon">
+
+      <span class="label-2 text-center span">Book A Table</span>
+    </a>    
+  </article>
+</main>
+
+
+
+
+
+<!-- - #ABOUT-->
+<!-- Menu section  -->
+
+
+
+<section class="menu-section" style="position: relative;">
+  <img src="./assets/images/mee.jpg" width="1880" height="650" alt="" style="width: 100%; display: block;">
+  <!-- Menu cards overlay positioned at the top -->
+  <div style="position: absolute; top: 10%; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1200px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+    
+      <!-- Menu Card 1 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/guntur.jpg" alt="Butter Chicken" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Guntur Chicken Fry</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">Fiery dry chicken fry made with the famous Guntur red chilies.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹249.00</span>
+          <a href="#" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+        </div>
+      </div>
+      <!-- Menu Card 2 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/chicken65.jpg" alt="Chicken Biryani" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Chicken 65 Andhra Style</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">Crispy chicken bites tossed in a spicy and tangy Andhra masala.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹229.00</span>
+          <a href="" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+         </div>
+      </div>
+      <!-- Menu Card 3 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/nellore.jpg" alt="Paneer Tikka" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Nellore Fish Fry</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">A spicy fish fry inspired by the flavors of coastal Nellore.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹299.00</span>
+          <a href="addcart.html" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+         </div>
+      </div>
+    </div>
+  </div>
+  <div style="position: absolute; top: 10%; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1200px;">
+    <!-- ... existing menu cards ... -->
+  </div>
+  <!-- Second row of menu cards -->
+  <div style="position: absolute; top: 55%; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1200px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+    
+      <!-- Menu Card 1 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/apollo.jpg" alt="Palak Paneer" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Apollo Fish</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">Tender fish cubes tossed in a hot and tangy semi-dry gravy.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);"> ₹319.00</span>
+          <a href="addcart.html" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+         </div>
+      </div>
+      <!-- Menu Card 2 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/andhra.jpg" alt="Chicken 65" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Andhra Mutton Pepper Fry</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">Juicy mutton pieces flavored with black pepper and southern spices.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹349.00</span>
+          <a href="addcart.html" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+         </div>
+      </div>
+      <!-- Menu Card 3 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/muttonballs.jpg" alt="Fish Curry" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Mutton Keema Balls </h3>
+        <p style="color: #ccc; margin-bottom: 15px;">Minced mutton meatballs deep-fried with herbs and green chilies.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹289.00</span>
+          <a href="addcart.html" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="menu-section" style="position: relative;">
+  <img src="./assets/images/mii.jpg" width="1880" height="650" alt="" style="width: 100%; display: block;">
+  <!-- First row of menu cards on mii.jpg -->
+  <div style="position: absolute; top: 2%; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1200px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+
+      <!-- Menu Card 1 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/ragi.jpg" alt="Tandoori Roti" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Ragi Sangati with Natu Kodi Pulusu</h3>
+        <p style="color: #ccc; margin-bottom: 15px;"> A wholesome Andhra delicacy pairing finger millet balls with spicy country chicken gravy for a hearty, rustic meal.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹499.00</span>
+          <a href="addcart.html" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+       </div>
+      </div>
+      <!-- Menu Card 2 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/gong.jpg" alt="Gulab Jamun" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Gongura Chicken Biryani</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">angy and fiery biryani made with sorrel leaves (gongura) and tender chicken.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹290.00</span>
+          <a href="addcart.html" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+       </div>
+      </div>
+      <!-- Menu Card 3 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/ulava.jpg" alt="Rasmalai" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Ulavacharu Chicken Biryani</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">Rich and earthy biryani made using horse gram soup and Andhra spices.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹300 .00</span>
+          <a href="#" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Second row of menu cards on mii.jpg -->
+  <div style="position: absolute; top: 50%; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1200px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+
+      <!-- Menu Card 1 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/spicy.jpg" alt="Naan" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Spicy Boneless Mutton Biryani</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">Tender boneless mutton tossed in chili-heavy masala, layered with rice.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹370.00</span>
+          <a href="#" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+        </div>
+      </div>
+      <!-- Menu Card 2 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/ghee.jpg" alt="Kheer" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Ghee Roast Mutton Biryani</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">Mutton roasted in ghee with dry masalas and layered with rice and fried onions.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹370.00</span>
+          <a href="#" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+        </div>
+      </div>
+      <!-- Menu Card 3 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/kadapa.jpg" alt="Gajar Ka Halwa" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Kadapa Mutton Biryani</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">A smoky, masala-rich biryani from Rayalaseema with caramelized onions and ghee.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹360.00</span>
+          <a href="#" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="menu-section" style="position: relative;">
+  <img src="./assets/images/ha.jpg.png" width="1880" height="1000" alt="" style="width: 100%; height: 1000px; display: block;">
+  <!-- First row of menu cards on mii.jpg -->
+  <div style="position: absolute; top: 2%; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1200px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+
+      <!-- Menu Card 1 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/natu.jpg" alt="Tandoori Roti" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Natu Kodi Biryani</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">Made with spicy country chicken and bold Andhra masalas for intense flavor.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹310.00</span>
+          <a href="#" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+        </div>
+      </div>
+      <!-- Menu Card 2 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/wings.jpg" alt="Gulab Jamun" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Chicken Wings Biryani</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">Tender chicken wings simmered in aromatic spices, layered with fragrant basmati rice for a bold biryani twist. </p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹260.00</span>
+          <a href="#" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+        </div>
+      </div>
+      <!-- Menu Card 3 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/raj.jpg" alt="Rasmalai" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Raju Gari Chicken Biryani</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">A royal-style biryani inspired by Andhra kings, rich in ghee, spice, and bold flavors.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹300.00</span>
+          <a href="#" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+        <span class="text text-1">ADD</span>
+        <span class="text text-2" aria-hidden="true">ADD</span>
+      </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Second row of menu cards on mii.jpg -->
+  <div style="position: absolute; top: 55%; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1200px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+
+      <!-- Menu Card 1 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/bel.jpg" alt="Naan" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Belgian Chocolate Ice Cream</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">Rich, velvety chocolate ice cream made with premium Belgian cocoa.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹110.00</span>
+          <a href="#" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+
+        </div>
+      </div>
+      <!-- Menu Card 2 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/a.jpg" alt="Kheer" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Apricot Delight</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">Stewed dried apricots served chilled with creamy custard or malai — a rich, royal Hyderabadi dessert.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹140.00</span>
+          <a href="#" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+        </div>
+      </div>
+      <!-- Menu Card 3 -->
+      <div style="background: rgba(12, 12, 12, 0.95); border-radius: 8px; padding: 20px; border: 1px solid var(--gold-crayola);">
+        <img src="./assets/images/double.jpg " alt="Gajar Ka Halwa" style="width: 120px; height: 120px; border-radius: 10%; margin-bottom: 15px;">
+        <h3 style="color: var(--gold-crayola); margin-bottom: 10px;">Double Ka Meetha</h3>
+        <p style="color: #ccc; margin-bottom: 15px;">Single serve of delightful Double Ka Meetha to go after Biryanis and Kebabs.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: var(--gold-crayola);">₹ 90.00</span>
+          <a href="#" class="btn btn-secondary add-to-cart" data-item-name="Guntur Chicken Fry" data-price="249.00">
+            <span class="text text-1">ADD</span>
+            <span class="text text-2" aria-hidden="true">ADD</span>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  
+
+<footer class="footer">
+    <div class="footer-bottom">
+        <p class="copyright">
+            &copy; 2025 Grilli. All Rights Reserved | Crafted by our 4 members of team.
+        </p>
+    </div>
+</footer>
+
+
+  <!--#BACK TO TOP-->
+ 
+
+  <a href="#top" class="back-top-btn active" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+  </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+    // Keep only the essential JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const itemName = this.getAttribute('data-item-name');
+                const price = this.getAttribute('data-price');
+                
+                fetch('add_to_cart.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        itemName: itemName,
+                        price: price
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        alert('Error adding item to cart. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tab switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const formType = btn.getAttribute('data-tab');
+                document.querySelectorAll('.auth-form').forEach(form => {
+                    form.style.display = 'none';
+                });
+                document.getElementById(formType + 'Form').style.display = 'block';
+            });
+        });
+
+        // Password toggle
+        document.querySelectorAll('.password-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.setAttribute('name', 'eye-off-outline');
+                } else {
+                    input.type = 'password';
+                    this.setAttribute('name', 'eye-outline');
+                }
+            });
+        });
+
+        // Close modal
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('authModal').style.display = 'none';
+            });
+        });
+
+        // Sign up form submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('signup.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Registration successful! Please login.');
+                    document.querySelector('[data-tab="login"]').click();
+                } else {
+                    alert(data.message || 'Registration failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during registration');
+            });
+        });
+
+        // Login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('login.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    localStorage.setItem('user', JSON.stringify({
+                        username: data.username,
+                        loggedIn: true
+                    }));
+                    document.getElementById('authBtn').style.display = 'none';
+                    document.getElementById('userDropdown').style.display = 'block';
+                    document.getElementById('welcomeUser').textContent = `Welcome, ${data.username}`;
+                    document.getElementById('authModal').style.display = 'none';
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
+                } else {
+                    alert(data.message || 'Login failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during login. Please try again.');
+            });
+        });
+
+        // Forgot password form submission
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            alert('Password reset link has been sent to ' + email);
+            showLoginForm();
+        });
+    });
+
+    // Show forgot password form
+    function showForgotPasswordForm() {
+        document.querySelectorAll('.auth-form').forEach(form => {
+            form.style.display = 'none';
+        });
+        document.getElementById('forgotPasswordForm').style.display = 'block';
+    }
+
+    // Show login form
+    function showLoginForm() {
+        document.querySelectorAll('.auth-form').forEach(form => {
+            form.style.display = 'none';
+        });
+        document.getElementById('loginForm').style.display = 'block';
+    }
+
+    // Open auth modal
+    document.getElementById('authBtn').addEventListener('click', function() {
+        document.getElementById('authModal').style.display = 'flex';
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(e) {
+        const modal = document.getElementById('authModal');
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    function handleLogout() {
+        localStorage.removeItem('user');
+        document.getElementById('userDropdown').style.display = 'none';
+        document.getElementById('authBtn').style.display = 'flex';
+        location.reload();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user.loggedIn) {
+            document.getElementById('authBtn').style.display = 'none';
+            document.getElementById('userDropdown').style.display = 'block';
+            document.getElementById('welcomeUser').textContent = `Welcome, ${user.username}`;
+        }
+    });
+
+    function toggleDropdown(button) {
+        const dropdown = button.nextElementSibling;
+        const allDropdowns = document.querySelectorAll('.user-menu');
+        const allButtons = document.querySelectorAll('.user-btn');
+        
+        // Close all other dropdowns
+        allDropdowns.forEach(d => {
+            if (d !== dropdown) {
+                d.classList.remove('active');
+            }
+        });
+        allButtons.forEach(b => {
+            if (b !== button) {
+                b.classList.remove('active');
+            }
+        });
+        
+        // Toggle current dropdown
+        dropdown.classList.toggle('active');
+        button.classList.toggle('active');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const dropdown = document.querySelector('.user-dropdown');
+        const isClickInside = dropdown.contains(event.target);
+        
+        if (!isClickInside) {
+            const menu = dropdown.querySelector('.user-menu');
+            const button = dropdown.querySelector('.user-btn');
+            menu.classList.remove('active');
+            button.classList.remove('active');
+        }
+    });
+  </script>
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+ <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
